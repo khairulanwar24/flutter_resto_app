@@ -1,31 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_posresto_app/core/core.dart';
+import 'package:flutter_posresto_app/core/constants/colors.dart';
 import 'package:flutter_posresto_app/data/datasources/auth_local_datasource.dart';
-import 'package:flutter_posresto_app/data/models/response/auth_response_model.dart';
 import 'package:flutter_posresto_app/presentation/auth/bloc/logout/logout_bloc.dart';
 import 'package:flutter_posresto_app/presentation/auth/login_page.dart';
 
-class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key});
+class LogoutPage extends StatefulWidget {
+  const LogoutPage({super.key});
 
   @override
-  State<DashboardPage> createState() => _DashboardPageState();
+  State<LogoutPage> createState() => _LogoutPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
-  User? user;
-
-  @override
-  void initState() {
-    AuthLocalDatasource().getAuthData().then((value) {
-      setState(() {
-        user = value?.user;
-      });
-    });
-    super.initState();
-  }
-
+class _LogoutPageState extends State<LogoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +21,7 @@ class _DashboardPageState extends State<DashboardPage> {
         child: Column(
           children: [
             const Text('Welcome to the Dashboard!'),
-            Text('Name: ${user?.name ?? 'Loading...'}'),
+
             SizedBox(height: 100),
             BlocListener<LogoutBloc, LogoutState>(
               listener: (context, state) {

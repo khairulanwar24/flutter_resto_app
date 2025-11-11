@@ -7,7 +7,7 @@ import 'package:flutter_posresto_app/core/components/spaces.dart';
 import 'package:flutter_posresto_app/core/constants/colors.dart';
 import 'package:flutter_posresto_app/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_posresto_app/presentation/auth/bloc/login/login_bloc.dart';
-import 'package:flutter_posresto_app/presentation/home/dashboard.dart';
+import 'package:flutter_posresto_app/presentation/home/pages/dashboard_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
