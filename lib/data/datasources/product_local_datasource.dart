@@ -74,4 +74,10 @@ class ProductRemoteDatasource {
       return Product.fromMap(maps[i]);
     });
   }
+
+  // delete all products
+  Future<void> deleteAllProducts() async {
+    final db = await instance.database;
+    await db.delete(tableProduct);
+  }
 }
