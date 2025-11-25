@@ -73,6 +73,38 @@ class Product {
         ? null
         : DateTime.parse(json["updated_at"]),
   );
+  factory Product.fromLocalMap(Map<String, dynamic> json) => Product(
+    id: json["productId"],
+    categoryId: json["categoryId"],
+    name: json["name"],
+    description: json["description"],
+    image: json["image"],
+    price: json["price"],
+    stock: json["stock"],
+    status: json["status"],
+    isFavourite: json["isFavourite"],
+    createdAt: json["createdAt"] == null
+        ? null
+        : DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null
+        ? null
+        : DateTime.parse(json["updatedAt"]),
+  );
+
+  Map<String, dynamic> toLocalMap() => {
+    "productId": id,
+    "categoryId": categoryId,
+    "categoryName": '',
+    "name": name,
+    "description": description,
+    "image": image,
+    "price": price,
+    "stock": stock,
+    "status": status,
+    "isFavourite": isFavourite,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+  };
 
   Map<String, dynamic> toMap() => {
     "id": id,

@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_posresto_app/core/assets/assets.gen.dart';
 import 'package:flutter_posresto_app/core/components/spaces.dart';
 import 'package:flutter_posresto_app/core/constants/colors.dart';
+import 'package:flutter_posresto_app/core/core.dart';
+import 'package:flutter_posresto_app/data/models/response/product_response_model.dart';
 
 import '../models/product_model.dart';
 
 class ProductCard extends StatelessWidget {
-  final ProductModel data;
+  final Product data;
   final VoidCallback onCartButton;
 
   const ProductCard({
@@ -45,8 +47,8 @@ class ProductCard extends StatelessWidget {
                   ),
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(40.0)),
-                    child: Image.asset(
-                      data.image,
+                    child: Image.network(
+                      data.image!,
                       width: 50,
                       height: 50,
                       fit: BoxFit.cover,
@@ -56,7 +58,7 @@ class ProductCard extends StatelessWidget {
                 const Spacer(),
                 FittedBox(
                   child: Text(
-                    data.name,
+                    data.name ?? '-',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
@@ -65,6 +67,7 @@ class ProductCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
+
                 const SpaceHeight(8.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,7 +75,7 @@ class ProductCard extends StatelessWidget {
                     Flexible(
                       child: FittedBox(
                         child: Text(
-                          data.category.value,
+                          data.categoryId.toString(),
                           style: const TextStyle(
                             color: AppColors.grey,
                             fontSize: 12,
@@ -83,7 +86,7 @@ class ProductCard extends StatelessWidget {
                     Flexible(
                       child: FittedBox(
                         child: Text(
-                          data.priceFormat,
+                          data.price!.toIntegerFromText.currencyFormatRp,
                           style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 12,

@@ -5,10 +5,6 @@ import 'package:flutter_posresto_app/data/models/response/product_response_model
 import 'package:http/http.dart' as http;
 
 class ProductRemoteDatasource {
-  final String baseUrl;
-
-  ProductRemoteDatasource({required this.baseUrl});
-
   Future<Either<String, ProductResponseModel>> getProducts() async {
     final url = Uri.parse('${Variables.baseUrl}/api/api-products');
     final authData = await AuthLocalDatasource().getAuthData();

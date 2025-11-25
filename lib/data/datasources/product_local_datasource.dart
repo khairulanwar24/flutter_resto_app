@@ -1,11 +1,10 @@
 import 'package:flutter_posresto_app/data/models/response/product_response_model.dart';
 import 'package:sqflite/sqflite.dart';
 
-class ProductRemoteDatasource {
-  ProductRemoteDatasource._init();
+class ProductLocalDatasource {
+  ProductLocalDatasource._init();
 
-  static final ProductRemoteDatasource instance =
-      ProductRemoteDatasource._init();
+  static final ProductLocalDatasource instance = ProductLocalDatasource._init();
 
   final String tableProduct = 'products';
   static Database? _database;
@@ -60,18 +59,19 @@ class ProductRemoteDatasource {
     for (var product in products) {
       await db.insert(
         tableProduct,
-        product.toMap(),
+        product.toLocalMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
+      print('inserted success for product name: ${product.name}');
     }
   }
 
   // get all products
-  Future<List<Product>> getAllProducts() async {
+  Future<List<Product>> getProducts() async {
     final db = await instance.database;
     final List<Map<String, dynamic>> maps = await db.query(tableProduct);
     return List.generate(maps.length, (i) {
-      return Product.fromMap(maps[i]);
+      return Product.fromLocalMap(maps[i]);
     });
   }
 
