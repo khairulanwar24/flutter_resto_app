@@ -4,6 +4,7 @@ import 'package:flutter_posresto_app/core/assets/assets.gen.dart';
 import 'package:flutter_posresto_app/core/components/buttons.dart';
 import 'package:flutter_posresto_app/core/components/spaces.dart';
 import 'package:flutter_posresto_app/core/constants/colors.dart';
+import 'package:flutter_posresto_app/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/bloc/local_product/local_product_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/models/product_category.dart';
 import 'package:flutter_posresto_app/presentation/home/models/product_model.dart';
@@ -298,42 +299,177 @@ class _HomePageState extends State<HomePage> {
                                 },
                               ),
                             ),
-                            // if (searchResults
-                            //     .where((element) => element.category.isFood)
-                            //     .toList()
-                            //     .isEmpty)
-                            //   const Padding(
-                            //     padding: EdgeInsets.only(top: 80.0),
-                            //     child: _IsEmpty(),
-                            //   )
-                            // else
-                            //   SizedBox(
-                            //     child: GridView.builder(
-                            //       shrinkWrap: true,
-                            //       itemCount: searchResults
-                            //           .where(
-                            //             (element) => element.category.isFood,
-                            //           )
-                            //           .toList()
-                            //           .length,
-                            //       physics: const NeverScrollableScrollPhysics(),
-                            //       gridDelegate:
-                            //           const SliverGridDelegateWithFixedCrossAxisCount(
-                            //             childAspectRatio: 0.85,
-                            //             crossAxisCount: 3,
-                            //             crossAxisSpacing: 30.0,
-                            //             mainAxisSpacing: 30.0,
-                            //           ),
-                            //       itemBuilder: (context, index) => ProductCard(
-                            //         data: searchResults
-                            //             .where(
-                            //               (element) => element.category.isFood,
-                            //             )
-                            //             .toList()[index],
-                            //         onCartButton: () {},
-                            //       ),
-                            //     ),
-                            //   ),
+
+                            // Minuman Tab
+                            SizedBox(
+                              child: BlocBuilder<LocalProductBloc, LocalProductState>(
+                                builder: (context, state) {
+                                  return state.maybeWhen(
+                                    orElse: () {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    },
+                                    loading: () {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    },
+                                    loaded: (products) {
+                                      if (products.isEmpty) {
+                                        return const Center(
+                                          child: Text('No Items'),
+                                        );
+                                      }
+                                      return GridView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: products
+                                            .where(
+                                              (element) =>
+                                                  element.category!.id! == 2,
+                                            )
+                                            .toList()
+                                            .length,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                              childAspectRatio: 0.85,
+                                              crossAxisCount: 3,
+                                              crossAxisSpacing: 30.0,
+                                              mainAxisSpacing: 30.0,
+                                            ),
+                                        itemBuilder: (context, index) =>
+                                            ProductCard(
+                                              data: products
+                                                  .where(
+                                                    (element) =>
+                                                        element.category!.id! ==
+                                                        2,
+                                                  )
+                                                  .toList()[index],
+                                              onCartButton: () {},
+                                            ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+
+                            // Makanan Tab
+                            SizedBox(
+                              child: BlocBuilder<LocalProductBloc, LocalProductState>(
+                                builder: (context, state) {
+                                  return state.maybeWhen(
+                                    orElse: () {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    },
+                                    loading: () {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    },
+                                    loaded: (products) {
+                                      if (products.isEmpty) {
+                                        return const Center(
+                                          child: Text('No Items'),
+                                        );
+                                      }
+                                      return GridView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: products
+                                            .where(
+                                              (element) =>
+                                                  element.category!.id! == 1,
+                                            )
+                                            .toList()
+                                            .length,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                              childAspectRatio: 0.85,
+                                              crossAxisCount: 3,
+                                              crossAxisSpacing: 30.0,
+                                              mainAxisSpacing: 30.0,
+                                            ),
+                                        itemBuilder: (context, index) =>
+                                            ProductCard(
+                                              data: products
+                                                  .where(
+                                                    (element) =>
+                                                        element.category!.id! ==
+                                                        1,
+                                                  )
+                                                  .toList()[index],
+                                              onCartButton: () {},
+                                            ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+
+                            SizedBox(
+                              child: BlocBuilder<LocalProductBloc, LocalProductState>(
+                                builder: (context, state) {
+                                  return state.maybeWhen(
+                                    orElse: () {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    },
+                                    loading: () {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    },
+                                    loaded: (products) {
+                                      if (products.isEmpty) {
+                                        return const Center(
+                                          child: Text('No Items'),
+                                        );
+                                      }
+                                      return GridView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: products
+                                            .where(
+                                              (element) =>
+                                                  element.category!.id! == 3,
+                                            )
+                                            .toList()
+                                            .length,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                              childAspectRatio: 0.85,
+                                              crossAxisCount: 3,
+                                              crossAxisSpacing: 30.0,
+                                              mainAxisSpacing: 30.0,
+                                            ),
+                                        itemBuilder: (context, index) =>
+                                            ProductCard(
+                                              data: products
+                                                  .where(
+                                                    (element) =>
+                                                        element.category!.id! ==
+                                                        3,
+                                                  )
+                                                  .toList()[index],
+                                              onCartButton: () {},
+                                            ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+
                             // if (searchResults
                             //     .where((element) => element.category.isDrink)
                             //     .toList()
@@ -490,31 +626,31 @@ class _HomePageState extends State<HomePage> {
                           const SpaceHeight(8),
                           const Divider(),
                           const SpaceHeight(8),
-                          //   BlocBuilder<CheckoutBloc, CheckoutState>(
-                          //     builder: (context, state) {
-                          //       return state.maybeWhen(
-                          //         orElse: () =>
-                          //             const Center(child: Text('No Items')),
-                          //         success: (products, qty, price) {
-                          //           if (products.isEmpty) {
-                          //             return const Center(
-                          //               child: Text('No Items'),
-                          //             );
-                          //           }
-                          //           return ListView.separated(
-                          //             shrinkWrap: true,
-                          //             physics:
-                          //                 const NeverScrollableScrollPhysics(),
-                          //             itemBuilder: (context, index) =>
-                          //                 OrderMenu(data: products[index]),
-                          //             separatorBuilder: (context, index) =>
-                          //                 const SpaceHeight(1.0),
-                          //             itemCount: products.length,
-                          //           );
-                          //         },
-                          //       );
-                          //     },
-                          //   ),
+                          BlocBuilder<CheckoutBloc, CheckoutState>(
+                            builder: (context, state) {
+                              return state.maybeWhen(
+                                orElse: () =>
+                                    const Center(child: Text('No Items')),
+                                loaded: (products) {
+                                  if (products.isEmpty) {
+                                    return const Center(
+                                      child: Text('No Items'),
+                                    );
+                                  }
+                                  return ListView.separated(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, index) =>
+                                        OrderMenu(data: products[index]),
+                                    separatorBuilder: (context, index) =>
+                                        const SpaceHeight(1.0),
+                                    itemCount: products.length,
+                                  );
+                                },
+                              );
+                            },
+                          ),
                           const SpaceHeight(8.0),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

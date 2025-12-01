@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_posresto_app/core/assets/assets.gen.dart';
 import 'package:flutter_posresto_app/core/components/spaces.dart';
 import 'package:flutter_posresto_app/core/constants/colors.dart';
+import 'package:flutter_posresto_app/core/constants/variables.dart';
 import 'package:flutter_posresto_app/core/core.dart';
 import 'package:flutter_posresto_app/data/models/response/product_response_model.dart';
+import 'package:flutter_posresto_app/presentation/home/bloc/checkout/checkout_bloc.dart';
 
 import '../models/product_model.dart';
 
@@ -23,6 +25,7 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // context.read<CheckoutBloc>().add(CheckoutEvent.addProduct(data));
+        context.read<CheckoutBloc>().add(CheckoutEvent.addItem(data));
       },
       child: Container(
         padding: const EdgeInsets.all(16.0),
@@ -48,7 +51,9 @@ class ProductCard extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(40.0)),
                     child: Image.network(
-                      data.image!,
+                      data.image!.contains('http')
+                          ? data.image!
+                          : '${Variables.baseUrl}/${data.image}',
                       width: 50,
                       height: 50,
                       fit: BoxFit.cover,
@@ -75,7 +80,7 @@ class ProductCard extends StatelessWidget {
                     Flexible(
                       child: FittedBox(
                         child: Text(
-                          data.categoryId.toString(),
+                          data.category!.name ?? '-',
                           style: const TextStyle(
                             color: AppColors.grey,
                             fontSize: 12,
