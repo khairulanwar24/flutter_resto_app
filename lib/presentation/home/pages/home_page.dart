@@ -9,6 +9,7 @@ import 'package:flutter_posresto_app/presentation/home/bloc/checkout/checkout_bl
 import 'package:flutter_posresto_app/presentation/home/bloc/local_product/local_product_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/models/product_category.dart';
 import 'package:flutter_posresto_app/presentation/home/models/product_model.dart';
+import 'package:flutter_posresto_app/presentation/home/pages/confirm_payment_page.dart';
 import 'package:flutter_posresto_app/presentation/home/widgets/column_button.dart';
 import 'package:flutter_posresto_app/presentation/home/widgets/custom_tab_bar.dart';
 import 'package:flutter_posresto_app/presentation/home/widgets/home_title.dart';
@@ -723,18 +724,23 @@ class _HomePageState extends State<HomePage> {
                                 builder: (context, state) {
                                   final price = state.maybeWhen(
                                     orElse: () => 0,
-                                    loaded: (products) => products
-                                        .map(
-                                          (e) =>
-                                              e
-                                                  .product
-                                                  .price!
-                                                  .toIntegerFromText *
-                                              e.quantity,
-                                        )
-                                        .reduce(
-                                          (value, element) => value + element,
-                                        ),
+                                    loaded: (products) {
+                                      if (products.isEmpty) {
+                                        return 0;
+                                      }
+                                      return products
+                                          .map(
+                                            (e) =>
+                                                e
+                                                    .product
+                                                    .price!
+                                                    .toIntegerFromText *
+                                                e.quantity,
+                                          )
+                                          .reduce(
+                                            (value, element) => value + element,
+                                          );
+                                    },
                                   );
                                   return Text(
                                     price.currencyFormatRp,
@@ -762,7 +768,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           child: Button.filled(
                             onPressed: () {
-                              //   context.push(const ConfirmPaymentPage());
+                              context.push(const ConfirmPaymentPage());
                             },
                             label: 'Lanjutkan Pembayaran',
                           ),
