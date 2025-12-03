@@ -4,6 +4,7 @@ import 'package:flutter_posresto_app/core/components/spaces.dart';
 import 'package:flutter_posresto_app/core/constants/colors.dart';
 import 'package:flutter_posresto_app/core/constants/variables.dart';
 import 'package:flutter_posresto_app/core/core.dart';
+import 'package:flutter_posresto_app/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/models/order_item.dart';
 import 'package:flutter_posresto_app/presentation/home/models/product_quantity.dart';
 
@@ -75,6 +76,9 @@ class OrderMenu extends StatelessWidget {
                     //   // data.quantity--;
                     //   // setState(() {});
                     // }
+                    context.read<CheckoutBloc>().add(
+                      CheckoutEvent.removeItem(data.product),
+                    );
                   },
                   child: Container(
                     width: 30,
@@ -98,6 +102,9 @@ class OrderMenu extends StatelessWidget {
                     //     onDeleteTap();
                     // data.quantity++;
                     // setState(() {});
+                    context.read<CheckoutBloc>().add(
+                      CheckoutEvent.addItem(data.product),
+                    );
                   },
                   child: Container(
                     width: 30,

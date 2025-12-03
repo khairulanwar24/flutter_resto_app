@@ -626,6 +626,8 @@ class _HomePageState extends State<HomePage> {
                           const SpaceHeight(8),
                           const Divider(),
                           const SpaceHeight(8),
+
+                          // Ordered Menu List
                           BlocBuilder<CheckoutBloc, CheckoutState>(
                             builder: (context, state) {
                               return state.maybeWhen(
