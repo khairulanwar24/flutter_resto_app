@@ -7,6 +7,9 @@ class ProductLocalDatasource {
   static final ProductLocalDatasource instance = ProductLocalDatasource._init();
 
   final String tableProduct = 'products';
+  final String tableOrder = 'orders';
+  final String tableOrderItem = 'order_items';
+
   static Database? _database;
 
   Future<void> _createDB(Database db, int version) async {
@@ -27,6 +30,35 @@ class ProductLocalDatasource {
         updatedAt TEXT
       )
     ''');
+
+    await db.execute('''
+      CREATE TABLE $tableOrder (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        sub_total INTEGER,
+        tax INTEGER,
+        discount INTEGER,
+        service_charge INTEGER,
+        total INTEGER,
+        payment_method TEXT,
+        total_item INTEGER,
+        id_kasir INTEGER,
+        nama_kasir TEXT,
+        transaction_time TEXT
+        is_sync INTEGER DEFAULT 0
+
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE $tableOrderItem (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id_order INTEGER,
+        id_product INTEGER,
+        quantity INTEGER,
+        price INTEGER,
+
+      )
+    ''');
   }
 
   Future<Database> _initDB(String filePath) async {
@@ -41,6 +73,16 @@ class ProductLocalDatasource {
 
     _database = await _initDB('dbresto14.db');
     return _database!;
+  }
+
+  // save order
+  Future<void> saveOrder(Map<String, dynamic> order) async {
+    final db = await instance.database;
+    await db.insert(
+      tableOrder,
+      order,
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   // insert data Product
