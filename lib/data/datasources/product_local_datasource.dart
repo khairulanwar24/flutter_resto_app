@@ -1,4 +1,6 @@
 import 'package:flutter_posresto_app/data/models/response/product_response_model.dart';
+import 'package:flutter_posresto_app/presentation/home/models/order_model.dart';
+import 'package:flutter_posresto_app/presentation/home/models/product_quantity.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ProductLocalDatasource {
@@ -76,12 +78,58 @@ class ProductLocalDatasource {
   }
 
   // save order
-  Future<void> saveOrder(Map<String, dynamic> order) async {
+  Future<void> saveOrder(OrderModel order) async {
     final db = await instance.database;
-    await db.insert(
+    int id = await db.insert(
       tableOrder,
-      order,
+      order.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+
+    for (var item in order.orderItems) {
+      await db.insert(
+        tableOrderItem,
+        item.toLocalMap(id),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+  }
+
+  // get data order
+  Future<List<OrderModel>> getOrderByIsNotSync() async {
+    final db = await instance.database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      tableOrder,
+      where: 'is_sync = ?',
+      whereArgs: [0],
+    );
+
+    return List.generate(maps.length, (i) {
+      return OrderModel.fromMap(maps[i]);
+    });
+  }
+
+  // get order item by order id
+  Future<List<ProductQuantity>> getOrderItemsByOrderId(int orderId) async {
+    final db = await instance.database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      tableOrderItem,
+      where: 'id_order = ?',
+      whereArgs: [orderId],
+    );
+    return List.generate(maps.length, (i) {
+      return ProductQuantity.fromLocalMap(maps[i]);
+    });
+  }
+
+  // update order is_sync
+  Future<void> updateOrderIsSync(int orderId) async {
+    final db = await instance.database;
+    await db.update(
+      tableOrder,
+      {'is_sync': 1},
+      where: 'id = ?',
+      whereArgs: [orderId],
     );
   }
 

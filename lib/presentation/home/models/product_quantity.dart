@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_posresto_app/data/models/response/product_response_model.dart';
 
 class ProductQuantity {
@@ -17,4 +19,36 @@ class ProductQuantity {
 
   @override
   int get hashCode => product.hashCode ^ quantity.hashCode;
+
+  Map<String, dynamic> toMap() {
+    return {'product': product.toMap(), 'quantity': quantity};
+  }
+
+  Map<String, dynamic> toLocalMap(int orderId) {
+    return {
+      'order_id': orderId,
+      'product_id': product.id,
+      'quantity': quantity,
+      'price': product.price,
+    };
+  }
+
+  factory ProductQuantity.fromMap(Map<String, dynamic> map) {
+    return ProductQuantity(
+      product: Product.fromMap(map['product']),
+      quantity: map['quantity']?.toInt() ?? 0,
+    );
+  }
+
+  factory ProductQuantity.fromLocalMap(Map<String, dynamic> map) {
+    return ProductQuantity(
+      product: Product.fromLocalMap(map), //Product.fromMap(map['product'])(),
+      quantity: map['quantity']?.toInt() ?? 0,
+    );
+  }
+
+  String toJson() => toMap().toString();
+
+  factory ProductQuantity.fromJson(String source) =>
+      ProductQuantity.fromMap(json.decode(source));
 }
