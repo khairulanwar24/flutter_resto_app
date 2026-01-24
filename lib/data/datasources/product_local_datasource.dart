@@ -46,7 +46,7 @@ class ProductLocalDatasource {
         total_item INTEGER,
         id_kasir INTEGER,
         nama_kasir TEXT,
-        transaction_time TEXT
+        transaction_time TEXT,
         is_sync INTEGER DEFAULT 0
 
       )
@@ -58,7 +58,7 @@ class ProductLocalDatasource {
         id_order INTEGER,
         id_product INTEGER,
         quantity INTEGER,
-        price INTEGER,
+        price INTEGER
 
       )
     ''');
@@ -74,7 +74,7 @@ class ProductLocalDatasource {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('dbresto14.db');
+    _database = await _initDB('dbresto15.db');
     return _database!;
   }
 
