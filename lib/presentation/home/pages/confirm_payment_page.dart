@@ -6,6 +6,8 @@ import 'package:flutter_posresto_app/core/components/spaces.dart';
 import 'package:flutter_posresto_app/core/constants/colors.dart';
 import 'package:flutter_posresto_app/core/core.dart';
 import 'package:flutter_posresto_app/presentation/home/bloc/checkout/checkout_bloc.dart';
+import 'package:flutter_posresto_app/presentation/home/bloc/order/order_bloc.dart';
+import 'package:flutter_posresto_app/presentation/home/models/product_quantity.dart';
 import 'package:flutter_posresto_app/presentation/home/widgets/success_payment_dialog.dart';
 
 import '../models/product_category.dart';
@@ -441,18 +443,38 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                                   ),
                                 ),
                                 const SpaceWidth(8.0),
-                                Flexible(
-                                  child: Button.filled(
-                                    onPressed: () async {
-                                      await showDialog(
-                                        context: context,
-                                        barrierDismissible: false,
-                                        builder: (context) =>
-                                            const SuccessPaymentDialog(),
-                                      );
-                                    },
-                                    label: 'Bayar',
-                                  ),
+                                BlocBuilder<CheckoutBloc, CheckoutState>(
+                                  builder: (context, state) {
+                                    List<ProductQuantity> items = state
+                                        .maybeWhen(
+                                          orElse: () => [],
+                                          loaded: (products) => products,
+                                        );
+                                    return Flexible(
+                                      child: Button.filled(
+                                        onPressed: () async {
+                                          context.read<OrderBloc>().add(
+                                            OrderEvent.order(
+                                              items,
+                                              0,
+                                              0,
+                                              0,
+                                              totalPriceController
+                                                  .text
+                                                  .toIntegerFromText,
+                                            ),
+                                          );
+                                          await showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (context) =>
+                                                const SuccessPaymentDialog(),
+                                          );
+                                        },
+                                        label: 'Bayar',
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),

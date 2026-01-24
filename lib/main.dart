@@ -10,6 +10,7 @@ import 'package:flutter_posresto_app/presentation/auth/bloc/logout/logout_bloc.d
 import 'package:flutter_posresto_app/presentation/auth/login_page.dart';
 import 'package:flutter_posresto_app/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/bloc/local_product/local_product_bloc.dart';
+import 'package:flutter_posresto_app/presentation/home/bloc/order/order_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/pages/dashboard_page.dart';
 import 'package:flutter_posresto_app/presentation/setting/bloc/sync_product/sync_product_bloc.dart';
 
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
               LocalProductBloc(ProductLocalDatasource.instance),
         ),
         BlocProvider(create: (context) => CheckoutBloc()),
+        BlocProvider(create: (context) => OrderBloc()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

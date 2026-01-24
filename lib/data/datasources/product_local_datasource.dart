@@ -36,6 +36,7 @@ class ProductLocalDatasource {
     await db.execute('''
       CREATE TABLE $tableOrder (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        payment_amount INTEGER,
         sub_total INTEGER,
         tax INTEGER,
         discount INTEGER,

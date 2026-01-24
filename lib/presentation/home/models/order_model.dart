@@ -5,6 +5,7 @@ import 'package:flutter_posresto_app/presentation/home/models/product_quantity.d
 
 class OrderModel {
   final int? id;
+  final int paymentAmount;
   final int subTotal;
   final int tax;
   final int discount;
@@ -19,6 +20,7 @@ class OrderModel {
   final List<ProductQuantity> orderItems;
   OrderModel({
     this.id,
+    required this.paymentAmount,
     required this.subTotal,
     required this.tax,
     required this.discount,
@@ -50,9 +52,10 @@ class OrderModel {
     };
   }
 
-factory OrderModel.fromMap(Map<String, dynamic> map) {
+  factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
       id: map['id']?.toInt(),
+      paymentAmount: map['payment_amount']?.toInt() ?? 0,
       subTotal: map['sub_total']?.toInt() ?? 0,
       tax: map['tax']?.toInt() ?? 0,
       discount: map['discount']?.toInt() ?? 0,
@@ -66,7 +69,7 @@ factory OrderModel.fromMap(Map<String, dynamic> map) {
       isSync: map['is_sync']?.toInt() ?? 0,
       orderItems: [],
     );
-  } 
+  }
 
   String toJson() => toMap().toString();
 
