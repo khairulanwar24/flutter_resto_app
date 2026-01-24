@@ -76,11 +76,37 @@ class _SuccessPaymentDialogState extends State<SuccessPaymentDialog> {
               },
             ),
             const SpaceHeight(10.0),
+
             const Divider(),
 
             const SpaceHeight(8.0),
 
             const Text('NOMINAL BAYAR'),
+            const SpaceHeight(5.0),
+            BlocBuilder<OrderBloc, OrderState>(
+              builder: (context, state) {
+                final paymentAmount = state.maybeWhen(
+                  orElse: () => 0,
+                  loaded: (order) => order.paymentAmount,
+                );
+                final total = state.maybeWhen(
+                  orElse: () => 0,
+                  loaded: (order) => order.total,
+                );
+                final diff = paymentAmount - total;
+
+                return Text(
+                  diff.ceil().currencyFormatRp,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                );
+              },
+            ),
+
+            const Divider(),
+
+            const SpaceHeight(8.0),
+
+            const Text('KEMBALIAN'),
             const SpaceHeight(5.0),
             BlocBuilder<OrderBloc, OrderState>(
               builder: (context, state) {
@@ -94,6 +120,7 @@ class _SuccessPaymentDialogState extends State<SuccessPaymentDialog> {
                 );
               },
             ),
+
             const SpaceHeight(10.0),
             const Divider(),
             const SpaceHeight(8.0),
