@@ -26,8 +26,8 @@ class ProductQuantity {
 
   Map<String, dynamic> toLocalMap(int orderId) {
     return {
-      'order_id': orderId,
-      'product_id': product.id,
+      'id_order': orderId,
+      'id_product': product.id,
       'quantity': quantity,
       'price': product.price,
     };
