@@ -89,14 +89,10 @@ class _SuccessPaymentDialogState extends State<SuccessPaymentDialog> {
                   orElse: () => 0,
                   loaded: (order) => order.paymentAmount,
                 );
-                final total = state.maybeWhen(
-                  orElse: () => 0,
-                  loaded: (order) => order.total,
-                );
-                final diff = paymentAmount - total;
 
                 return Text(
-                  diff.ceil().currencyFormatRp,
+                  paymentAmount.ceil().currencyFormatRp,
+
                   style: const TextStyle(fontWeight: FontWeight.w700),
                 );
               },
@@ -114,8 +110,15 @@ class _SuccessPaymentDialogState extends State<SuccessPaymentDialog> {
                   orElse: () => 0,
                   loaded: (order) => order.paymentAmount,
                 );
+
+                final total = state.maybeWhen(
+                  orElse: () => 0,
+                  loaded: (order) => order.total,
+                );
+
+                final diff = paymentAmount - total;
                 return Text(
-                  paymentAmount.ceil().currencyFormatRp,
+                  diff.ceil().currencyFormatRp,
                   style: const TextStyle(fontWeight: FontWeight.w700),
                 );
               },
