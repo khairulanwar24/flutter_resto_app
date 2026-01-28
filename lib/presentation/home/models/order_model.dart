@@ -35,9 +35,27 @@ class OrderModel {
     required this.orderItems,
   });
 
+  Map<String, dynamic> toServerMap() {
+    return {
+      'payment_amount': paymentAmount,
+      'sub_total': subTotal,
+      'tax': tax,
+      'discount': discount,
+      'service_charge': serviceCharge,
+      'total': total,
+      'payment_method': paymentMethod,
+      'total_item': totalItem,
+      'id_kasir': idKasir,
+      'nama_kasir': namaKasir,
+      'transaction_time': transactionTime,
+      'order_items': orderItems.map((item) => item.toLocalMap(id!)).toList(),
+    };
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'payment_amount': paymentAmount,
       'sub_total': subTotal,
       'tax': tax,
       'discount': discount,
@@ -71,7 +89,7 @@ class OrderModel {
     );
   }
 
-  String toJson() => toMap().toString();
+  String toJson() => json.encode(toServerMap());
 
   factory OrderModel.fromJson(String source) =>
       OrderModel.fromMap(json.decode(source));
