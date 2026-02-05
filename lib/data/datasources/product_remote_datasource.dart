@@ -11,7 +11,7 @@ class ProductRemoteDatasource {
     final response = await http.get(
       url,
       headers: {
-        'Authorization': 'Bearer ${authData?.token}',
+        'Authorization': 'Bearer ${authData.token}',
         'Content-Type': 'application/json',
       },
     );

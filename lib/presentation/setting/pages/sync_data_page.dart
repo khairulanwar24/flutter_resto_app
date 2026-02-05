@@ -61,6 +61,7 @@ class _SyncDataPageState extends State<SyncDataPage> {
               );
             },
           ),
+          const Text('Sync Order'),
         ],
       ),
     );

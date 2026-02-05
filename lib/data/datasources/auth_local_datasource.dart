@@ -23,18 +23,15 @@ class AuthLocalDatasource {
   }
 
   // 📦 Fungsi untuk mengambil data autentikasi yang sudah disimpan
-  Future<AuthResponseModel?> getAuthData() async {
+  Future<AuthResponseModel> getAuthData() async {
     // 1️⃣ Ambil instance SharedPreferences
     final prefs = await SharedPreferences.getInstance();
 
     // 2️⃣ Ambil string JSON yang disimpan dengan key 'auth_data'
     final authData = prefs.getString('auth_data');
 
-    // 3️⃣ Jika data tidak ada (null), kembalikan null
-    if (authData == null) return null;
-
     // 4️⃣ Jika ada, ubah kembali dari JSON ke objek AuthResponseModel
-    return AuthResponseModel.fromJson(authData);
+    return AuthResponseModel.fromJson(authData!);
   }
 
   // ✅ Fungsi untuk mengecek apakah data autentikasi sudah disimpan atau belum
